@@ -57,6 +57,27 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Business Dashboard Colors
+        chart: {
+          blue: "hsl(var(--chart-blue))",
+          green: "hsl(var(--chart-green))",
+          orange: "hsl(var(--chart-orange))",
+          purple: "hsl(var(--chart-purple))",
+          red: "hsl(var(--chart-red))",
+          yellow: "hsl(var(--chart-yellow))",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
+        info: {
+          DEFAULT: "hsl(var(--info))",
+          foreground: "hsl(var(--info-foreground))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
