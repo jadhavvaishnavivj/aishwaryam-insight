@@ -5,7 +5,7 @@ import { ProjectPerformanceChart } from "@/components/dashboard/ProjectPerforman
 import { CustomerTable } from "@/components/dashboard/CustomerTable";
 import { OutstandingPayments } from "@/components/dashboard/OutstandingPayments";
 import { UnitStatusChart } from "@/components/dashboard/UnitStatusChart";
-import { ChatButton } from "@/components/chat/ChatButton";
+import { ChatInput } from "@/components/chat/ChatInput";
 import { 
   Users, 
   Building, 
@@ -98,8 +98,10 @@ const Index = () => {
         </div>
       </div>
       
-      {/* AI Chat Assistant */}
-      <ChatButton />
+      {/* AI Assistant Chat */}
+      <div className="mt-8">
+        <ChatInput />
+      </div>
     </div>
   );
 };
