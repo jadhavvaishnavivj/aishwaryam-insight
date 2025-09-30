@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Building2, Calendar, Bell, Settings } from "lucide-react";
+import { Building2, Calendar, Bell, Settings, MessageSquare } from "lucide-react";
+import { AIChatDialog } from "@/components/chat/AIChatDialog";
 
 export function DashboardHeader() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   return (
     <Card className="shadow-card mb-6">
       <CardContent className="p-6">
@@ -28,6 +32,10 @@ export function DashboardHeader() {
               <Button variant="outline" size="sm">
                 <Calendar className="h-4 w-4 mr-2" />
                 Today
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => setIsChatOpen(true)}>
+                <MessageSquare className="h-4 w-4 mr-2" />
+                Ask AI Assistant
               </Button>
               <Button variant="outline" size="sm">
                 <Bell className="h-4 w-4" />
@@ -54,6 +62,8 @@ export function DashboardHeader() {
           </div>
         </div>
       </CardContent>
+      
+      <AIChatDialog open={isChatOpen} onOpenChange={setIsChatOpen} />
     </Card>
   );
 }
