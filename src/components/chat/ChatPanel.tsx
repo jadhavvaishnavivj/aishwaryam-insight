@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageBubble } from "./MessageBubble";
@@ -128,19 +128,31 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
           </div>
         </ScrollArea>
         
-        <div className="flex gap-2 mt-4">
-          <Input
+        <div className="relative mt-4">
+          <Textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Ask about your real estate data..."
+            onKeyDown={handleKeyPress}
+            placeholder="Message Real Estate Assistant..."
             disabled={isLoading}
-            className="flex-1"
+            className="min-h-[60px] max-h-[120px] resize-none pr-12 py-3 rounded-2xl border-2 focus:border-primary/50"
+            rows={1}
+            style={{
+              height: 'auto',
+              minHeight: '60px',
+              maxHeight: '120px',
+            }}
+            onInput={(e) => {
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = 'auto';
+              target.style.height = Math.min(target.scrollHeight, 120) + 'px';
+            }}
           />
           <Button
             onClick={sendMessage}
             disabled={isLoading || !input.trim()}
             size="icon"
+            className="absolute right-2 bottom-2 h-8 w-8 rounded-full"
           >
             <Send className="h-4 w-4" />
           </Button>
