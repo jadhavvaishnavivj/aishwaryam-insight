@@ -5,6 +5,7 @@ import { ProjectPerformanceChart } from "@/components/dashboard/ProjectPerforman
 import { CustomerTable } from "@/components/dashboard/CustomerTable";
 import { OutstandingPayments } from "@/components/dashboard/OutstandingPayments";
 import { UnitStatusChart } from "@/components/dashboard/UnitStatusChart";
+import { ChatButton } from "@/components/chat/ChatButton";
 import { 
   Users, 
   Building, 
@@ -96,6 +97,9 @@ const Index = () => {
           <UnitStatusChart />
         </div>
       </div>
+      
+      {/* AI Chat Assistant */}
+      <ChatButton />
     </div>
   );
 };
