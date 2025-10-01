@@ -79,7 +79,7 @@ export const AIChatDialog = ({ open, onOpenChange }: AIChatDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] bg-gradient-to-br from-primary to-primary/80 border-none text-white p-0">
+      <DialogContent className="w-screen h-screen max-w-none bg-gradient-to-br from-primary to-primary/80 border-none text-white p-0 rounded-none">
         <DialogHeader className="p-6 pb-4">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
@@ -92,8 +92,8 @@ export const AIChatDialog = ({ open, onOpenChange }: AIChatDialogProps) => {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="bg-background rounded-t-3xl px-6 pb-6">
-          <ScrollArea className="h-[300px] pr-4 mt-6">
+        <div className="bg-background px-6 pb-6 h-[calc(100vh-140px)] flex flex-col">
+          <ScrollArea className="flex-1 pr-4 mt-6">
             {messages.length === 0 ? (
               <div className="flex items-center justify-center h-full">
                 <p className="text-muted-foreground text-sm">Ask anything about your database</p>
@@ -126,7 +126,7 @@ export const AIChatDialog = ({ open, onOpenChange }: AIChatDialogProps) => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
               placeholder="e.g., How many customers do we have? What's our total revenue? Show available units..."
-              disabled={isLoading}
+              autoFocus
               className="min-h-[80px] resize-none text-sm border-2 focus:border-primary/50"
               rows={3}
             />
