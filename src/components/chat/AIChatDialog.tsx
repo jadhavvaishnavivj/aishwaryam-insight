@@ -79,7 +79,7 @@ export const AIChatDialog = ({ open, onOpenChange }: AIChatDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-screen h-screen max-w-none bg-gradient-to-br from-primary to-primary/80 border-none text-white p-0 rounded-none">
+      <DialogContent className="w-screen h-screen max-w-none bg-gradient-to-br from-primary to-primary/80 border-none p-0 rounded-none">
         <DialogHeader className="p-6 pb-4">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
@@ -92,7 +92,7 @@ export const AIChatDialog = ({ open, onOpenChange }: AIChatDialogProps) => {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="bg-background px-6 pb-6 h-[calc(100vh-140px)] flex flex-col">
+        <div className="bg-background text-foreground px-6 pb-6 h-[calc(100vh-140px)] flex flex-col">
           <ScrollArea className="flex-1 pr-4 mt-6">
             {messages.length === 0 ? (
               <div className="flex items-center justify-center h-full">
