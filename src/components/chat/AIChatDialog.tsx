@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Send, Loader2, X } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -74,21 +74,11 @@ export const AIChatDialog = ({ open, onOpenChange }: AIChatDialogProps) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] bg-gradient-to-br from-primary to-primary/80 border-none text-white p-0">
         <DialogHeader className="p-6 pb-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
-                <Send className="h-4 w-4" />
-              </div>
-              <DialogTitle className="text-xl font-semibold text-white">AI Database Assistant</DialogTitle>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+              <Send className="h-4 w-4" />
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onOpenChange(false)}
-              className="h-8 w-8 text-white hover:bg-white/20"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+            <DialogTitle className="text-xl font-semibold text-white">AI Database Assistant</DialogTitle>
           </div>
         </DialogHeader>
 
