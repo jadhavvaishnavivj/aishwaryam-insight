@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -23,6 +23,13 @@ export const AIChatDialog = ({ open, onOpenChange }: AIChatDialogProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const { toast } = useToast();
+
+  // Reset loading state when dialog closes
+  useEffect(() => {
+    if (!open) {
+      setIsLoading(false);
+    }
+  }, [open]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -80,6 +87,9 @@ export const AIChatDialog = ({ open, onOpenChange }: AIChatDialogProps) => {
             </div>
             <DialogTitle className="text-xl font-semibold text-white">AI Database Assistant</DialogTitle>
           </div>
+          <DialogDescription className="text-white/80 text-sm mt-2">
+            Ask questions about your database and get instant insights
+          </DialogDescription>
         </DialogHeader>
 
         <div className="bg-background rounded-t-3xl px-6 pb-6">
