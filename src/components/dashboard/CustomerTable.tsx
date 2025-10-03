@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Eye, MessageSquare, FileText, MoreHorizontal } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
 
 const recentCustomers = [
   {
@@ -49,6 +52,47 @@ const recentCustomers = [
 ];
 
 export function CustomerTable() {
+  const [selectedCustomer, setSelectedCustomer] = useState<typeof recentCustomers[0] | null>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handleViewDetails = (customer: typeof recentCustomers[0]) => {
+    setSelectedCustomer(customer);
+    setIsDetailsOpen(true);
+  };
+
+  const handleGenerateReceipt = (customer: typeof recentCustomers[0]) => {
+    // Generate receipt content
+    const receiptContent = `
+RECEIPT
+-----------------
+Customer ID: ${customer.id}
+Name: ${customer.name}
+Mobile: ${customer.mobile}
+Amount: ${customer.amount}
+Date: ${customer.date}
+Status: ${customer.status}
+-----------------
+Generated on: ${new Date().toLocaleString()}
+    `;
+
+    // Create and download receipt as text file
+    const blob = new Blob([receiptContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `receipt-${customer.id}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    toast({
+      title: "Receipt Generated",
+      description: `Receipt for ${customer.name} has been downloaded.`,
+    });
+  };
+
   return (
     <Card className="shadow-card">
       <CardHeader>
@@ -99,7 +143,7 @@ export function CustomerTable() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="bg-card border-border">
-                      <DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleViewDetails(customer)}>
                         <Eye className="h-4 w-4 mr-2" />
                         View Details
                       </DropdownMenuItem>
@@ -107,7 +151,7 @@ export function CustomerTable() {
                         <MessageSquare className="h-4 w-4 mr-2" />
                         Send SMS
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleGenerateReceipt(customer)}>
                         <FileText className="h-4 w-4 mr-2" />
                         Generate Receipt
                       </DropdownMenuItem>
@@ -119,6 +163,49 @@ export function CustomerTable() {
           </TableBody>
         </Table>
       </CardContent>
+
+      <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Customer Details</DialogTitle>
+          </DialogHeader>
+          {selectedCustomer && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-muted-foreground">Customer ID</p>
+                  <p className="font-mono font-medium">{selectedCustomer.id}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Status</p>
+                  <Badge 
+                    variant={selectedCustomer.status === "Active" ? "default" : "secondary"}
+                    className={selectedCustomer.status === "Active" ? "bg-success/10 text-success border-success/20" : ""}
+                  >
+                    {selectedCustomer.status}
+                  </Badge>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Name</p>
+                  <p className="font-medium">{selectedCustomer.name}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Mobile</p>
+                  <p className="font-medium">{selectedCustomer.mobile}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Amount</p>
+                  <p className="font-semibold text-chart-green">{selectedCustomer.amount}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Registration Date</p>
+                  <p className="font-medium">{selectedCustomer.date}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }
